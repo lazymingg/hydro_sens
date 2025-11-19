@@ -4,8 +4,7 @@ const sqlite3 = require('sqlite3').verbose();
 const auth = require('../middleware/auth')
 const respond_helper = require('../utils/respond_helper')
 const jwt_helper = require('../utils/jwt')
-const db = new sqlite3.Database("./hydro_sens.db", (err) =>
-{
+const db = new sqlite3.Database("./hydro_sens.db", (err) => {
     if (err) {
         console.error('eror open db file make sure run db_init.js')
     }
@@ -43,11 +42,11 @@ router.post("/register", (req, res) => {
     if (!username || !password || !product_key) {
         return respond_helper.error(res, {}, "missing username or password or product_key");
     }
-    
+
     db.run(
         "INSERT INTO users (username, password, product_key) VALUES (?, ?, ?)",
         [username, password, product_key],
-        
+
         function (err) {
             if (err) {
                 return respond_helper.error(res, {}, "register failded" + err.message);
