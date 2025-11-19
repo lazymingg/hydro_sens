@@ -1,0 +1,25 @@
+{
+  "name": "hydro_sens_express",
+  "version": "1.0.0",
+  "description": "IoT Web Dashboard for Smart Aquarium monitoring and control. Built with MQTT, ESP8266, and AI Chatbot integration. Final Project for Physics for IT.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lazymingg/hydro_sens.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lazymingg/hydro_sens/issues"
+  },
+  "homepage": "https://github.com/lazymingg/hydro_sens#readme",
+  "dependencies": {
+    "better-sqlite3": "^12.4.1",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "sqlite3": "^5.1.7"
+  }
+}

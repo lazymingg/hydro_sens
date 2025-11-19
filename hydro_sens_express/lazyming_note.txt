@@ -1,0 +1,5 @@
+db init là file khởi tạo db sqlite
+thư mục utils chứa các helper xử lý
+prj sử dụng jwt token
+
+chạy node app.js để chạy server
