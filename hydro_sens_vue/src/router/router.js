@@ -12,22 +12,26 @@ const router = createRouter({
     routes
 });
 
+
 //middleware check login nav guard
 router.beforeEach((to, from, next) => {
     const token = localStorage.getItem('token');
+    const tokenValid = isTokenValid(token);
     console.log('=== ROUTER DEBUG ===');
     console.log('Going to:', to.name, to.path);
     console.log('Token exists:', !!token);
-    console.log('Token value:', token);
+    console.log('Token valid:', tokenValid);
     
-    if (!token && to.name !== 'login') {
-        console.log('No token, redirecting to login');
-        next('/login');
-        return;
-    }
-
-    if (token && to.name === 'login') {
-        console.log('Has token, redirecting to home');
+    if (!tokenValid) {
+        // Clear bad token so we don't keep looping with stale data
+        localStorage.removeItem('token');
+        if (to.name !== 'login') {
+            console.log('Token invalid or missing, redirecting to login');
+            next('/login');
+            return;
+        }
+    } else if (to.name === 'login') {
+        console.log('Has valid token, redirecting to home');
         next('/');
         return;
     }
