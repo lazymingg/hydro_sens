@@ -5,7 +5,7 @@ const user_router = require('./route/user')
 const cors = require('cors')
 
 app.use(cors({
-  origin: 'http://localhost:5174', // allow to server to accept request from different origin
+  origin: /http:\/\/localhost(:\d+)?$/
 }));
 
 app.use(express.json());

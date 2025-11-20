@@ -4,6 +4,7 @@ const sqlite3 = require('sqlite3').verbose();
 const auth = require('../middleware/auth')
 const respond_helper = require('../utils/respond_helper')
 const jwt_helper = require('../utils/jwt')
+const rand = Math.random();
 const db = new sqlite3.Database("./hydro_sens.db", (err) => {
     if (err) {
         console.error('eror open db file make sure run db_init.js')
@@ -69,9 +70,32 @@ router.get("/profile", auth, (req, res) => {
                 if (err || !user) {
                     return respond_helper.error(res, {}, "invalid user");
                 }
-                return respond_helper.success(res, { user: user }, "here your profile");
+                // tra ve tat ca tru pass
+                const temp = { ...user };
+                delete temp.password;
+                return respond_helper.success(res, { user: temp }, "profile fetch success");
             }
         );
+    }
+});
+
+
+router.get("/hydro_sens_data", auth, (req, res) => {
+    const username = req.user.username;
+    if (!username) {
+        return respond_helper.error(res, {}, "you must login first");
+    }
+
+    else {
+        // lay du lieu hydro sens tu db khac neu co
+        // hien tai chi tra ve du lieu dummy random
+
+        const dummy_data = {
+            water_level: Math.floor(Math.random() * 100),
+            temperature: 20 + Math.floor(Math.random() * 15),
+            tds: 300 + Math.floor(Math.random() * 700),
+        };
+        return respond_helper.success(res, dummy_data, "hydro sens data fetch success");
     }
 });
 
