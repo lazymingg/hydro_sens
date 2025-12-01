@@ -1,18 +1,22 @@
 #include <Arduino.h>
 
-// put function declarations here:
-int myFunction(int, int);
+int buttonPin = 5;
+int ledPin = 18 ;
+bool lastButtonState = HIGH;
 
 void setup() {
   // put your setup code here, to run once:
-  int result = myFunction(2, 3);
+  Serial.begin(115200);
+  Serial.println("Hello, ESP32!");
+  pinMode(buttonPin , INPUT_PULLUP);
+  pinMode(ledPin , OUTPUT);
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
-}
+  delay(10); // this speeds up the simulation
+  int state = digitalRead(buttonPin);
+  if(state == LOW) digitalWrite(ledPin, HIGH);
+  if(state == HIGH) digitalWrite(ledPin, LOW);
 
-// put function definitions here:
-int myFunction(int x, int y) {
-  return x + y;
 }
