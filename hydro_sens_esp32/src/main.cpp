@@ -27,50 +27,23 @@ const int oneWireBus = 2;
 OneWire oneWire(oneWireBus);
 DallasTemperature sensors(&oneWire);
 
-// put function declarations here:
-void readTemperature();
+int buttonPin = 5;
+int ledPin = 18 ;
+bool lastButtonState = HIGH;
 
 void setup() {
   // put your setup code here, to run once:
-  Serial.begin(9600);
-  sensors.begin();
-
-  // connect wifi
-  Serial.print("Connecting to WiFi: ");
-  Serial.println(ssid);
-  WiFi.begin(ssid, password);
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
-    Serial.print(".");
-  }
-  Serial.println("\nWiFi connected.");
-  Serial.print("IP Address: ");
-  Serial.println(WiFi.localIP());
-
-  // init thingspeak
-  ThingSpeak.begin(client);
+  Serial.begin(115200);
+  Serial.println("Hello, ESP32!");
+  pinMode(buttonPin , INPUT_PULLUP);
+  pinMode(ledPin , OUTPUT);
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
-}
+  delay(10); // this speeds up the simulation
+  int state = digitalRead(buttonPin);
+  if(state == LOW) digitalWrite(ledPin, HIGH);
+  if(state == HIGH) digitalWrite(ledPin, LOW);
 
-// put function definitions here:
-void readTemperature() {
-  if (millis() - lastUpdateTime >= postingInterval) {
-    // read temperature
-    sensors.requestTemperatures();
-    float temperature = sensors.getTempCByIndex(0);
-
-    // check if device is connected
-    if (temperature != DEVICE_DISCONNECTED_C) {
-      Serial.print("Temperature: ");
-      Serial.print(temperature);
-
-      // post data to thingspeak
-      int statusCode = ThingSpeak.writeField(channelNumber, fieldTemper, temperature, writeAPIKey);
-    }
-  }
-
-  lastUpdateTime = millis();
 }
