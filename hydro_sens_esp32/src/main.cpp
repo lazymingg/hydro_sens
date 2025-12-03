@@ -46,7 +46,7 @@ void readTemperature() {
       Serial.print(temperature);
 
       // post data to thingspeak
-      int statusCode = ThingSpeak.writeField(channelNumber, fieldTemper, temperature, writeAPIKey);
+      int statusCode = ThingSpeak.writeField(channelNumber, fieldTemper, temperature, writeAPIKey); 
     }
   }
 
