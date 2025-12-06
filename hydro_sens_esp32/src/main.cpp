@@ -4,6 +4,7 @@
 #include "TemperHandler.h"
 #include "TDSHandler.h"
 #include "ENVReader.h"
+#include "MQTTHandler.h"
 
 const unsigned long POSTING_INTERVAL = 60000; 
 unsigned long lastUpdateTime = 0;
@@ -22,6 +23,7 @@ int tdsPin = 34;
 
 // Khai báo các đối tượng
 WiFiClient client;
+MQTTHandler *mqttHandler = nullptr;
 ThingSpeakManager *tsManager = nullptr;
 TemperHandler *temperHandler = nullptr;
 TDSHandler *tdsHandler = nullptr;
@@ -34,10 +36,12 @@ void setup() {
   pinMode(ledPin , OUTPUT);
 
   // khởi tạo các đối tượng
+  mqttHandler = new MQTTHandler();
   tsManager = new ThingSpeakManager(client);
   temperHandler = new TemperHandler(temperPin);
   tdsHandler = new TDSHandler(tdsPin);
 
+  mqttHandler->begin(ssid, password);
   tsManager->begin(ssid, password);
   temperHandler->begin();
   tdsHandler->begin();

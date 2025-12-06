@@ -9,14 +9,21 @@
 
 class ThingSpeakManager {
 private:
+    WiFiClient& client;
+
+    // Cấu hình
     String WRITE_API_KEY;
     String READ_API_KEY;
     unsigned long CHANNEL;
-    WiFiClient& client;
+
+    // đọc cấu hình từ file môi trường
+    bool loadConfig(ENVReader& envReader);
 public:
     ThingSpeakManager(WiFiClient& client);
+
     // Khởi tạo ThingSpeak và kết nối wifi
     void begin(const char* ssid, const char* password);
+
     // Ghi dữ liệu vào field
     int writeData(int field, float value);
 };
